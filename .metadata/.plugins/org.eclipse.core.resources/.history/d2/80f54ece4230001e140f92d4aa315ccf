@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+김경수의 홈페이지에 오신 것을 환영합니다.(html은 정적인 페이지) <br>
+톰캣서버에 내가 만든 웹어플리케이션(WEB 프로젝트) "등록" <br>
+톰캣의 server.xml파일에 context등록 : path와 docBase 일치<br>
+클라이언트의 요청 ex)) http://localhost:8080/web/index.html <br>
+-> 클라이언트가 localhost(127.0.0.1)의 톰캣서버가 open한 8080port로 요청<br>
+
+</body>
+</html>

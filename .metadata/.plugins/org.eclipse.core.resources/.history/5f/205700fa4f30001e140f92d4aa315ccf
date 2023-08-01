@@ -1,0 +1,14 @@
+package kr.web.controller;
+
+
+/* Servlet = Server + Let 
+ * 클라이언트의 요청 -> 톰캣 서버가 서블릿 해석 -> 응답
+ * JavaSE : Class, main()
+ * JavaEE : Servlet,
+ * 
+ * Servlet의 기본 골격 
+ * 1. HttpServlet클래스를 상속받는다. 
+ */
+public class HelloServlet {
+
+}
