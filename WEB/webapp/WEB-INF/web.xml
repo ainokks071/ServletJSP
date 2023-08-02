@@ -2,7 +2,24 @@
 
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                       http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
-<!-- 배치서술자  -->
+	<!-- web.xml = 배치서술자  
+	- 안내도 역할 : .class파일의 위치정보(어느 패키지?), build 기본위치 : WEB-INF/classes/
+	- servlet-mapping작업 : 클라이언트의 요청url과 진짜서블릿의 위치를 mapping 
+	- servlet의 세가지이름 : servlet-name(임의), servlet-class(진짜이름), url-pattern(클라이언트의요청)-->
+	
+	
+	<!-- web.xml방식은 번거롭기 때문에, annotation 방법으로 대체 
+	이름이 [HelloServlet]과 [kr.web.controller.HelloServlet]인 두 서블릿들 모두
+	      url-pattern [/hs.do]에 매핑되어 있는데, 이는 허용되지 않습니다.-->
+	
+<!-- 	<servlet>
+		<servlet-name>HelloServlet</servlet-name>	
+		<servlet-class>kr.web.controller.HelloServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HelloServlet</servlet-name>	
+		<url-pattern>/hs.do</url-pattern>
+	</servlet-mapping> -->
 
 
 </web-app>

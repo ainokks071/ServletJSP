@@ -1,9 +1,0 @@
-package kr.web.controller;
-
-
-/*Servlet = Server + Let
- * 
-*/
-public class HelloServlet {
-
-}

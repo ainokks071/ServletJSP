@@ -160,10 +160,15 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-		<!--톰캣 컨테이너에 우리가 만든 웹 어플리케이션을 등록한다. 서버 구동과 함께 server.xml의 context를 읽는다.-->
-		<Context path="/web" docBase="/Users/kks/dev-study/ServletJSP/WEB/webapp"></Context>
+		<!--톰캣 컨테이너에 우리가 만든 웹 어플리케이션(수동)을 등록한다.
+		 서버 구동과 함께 톰캣이 server.xml의 context를 읽는다.-->
+		<Context docBase="/Users/kks/dev-study/ServletJSP/WEB/webapp" path="/web"/>
 		
-      </Host>
+		<!--톰캣 컨테이너에 우리가 만든 웹 어플리케이션(자동)을 등록한다.
+		Dynamic Web Project 생성 시 Context Root(MVC01) -> path(src/main/webapp)
+		 Servers탭 -> Add and Remove!!
+		 서버 구동과 함께 톰캣이 server.xml의 context를 읽는다.-->
+        <Context docBase="MVC01" path="/MVC01" reloadable="true" source="org.eclipse.jst.jee.server:MVC01"/></Host>
     </Engine>
   </Service>
 </Server>

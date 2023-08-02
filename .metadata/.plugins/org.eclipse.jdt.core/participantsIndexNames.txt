@@ -1,3 +1,5 @@
 INDEX VERSION 1.131
 /Users/kks/dev-study/ServletJSP/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/60214896.index
 /WEB/src
+/Users/kks/dev-study/ServletJSP/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3343090250.index
+/MVC01/src/main/java
