@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 //DAO = Data Access Object
 //JDBC -> MyBatis, JPA : JDBC는 맛보기.
@@ -16,7 +17,7 @@ public class MemberDAO {
 	private Connection conn;
 	//SQL문 전송 객체 
 	private PreparedStatement ps;
-	//db에서 조회한 데이터 저장 객체 
+	//db에서 가져온 데이터 저장 객체 
 	private ResultSet rs;
 
 	//DB연결객체(Connection객체) 생성 
@@ -26,7 +27,7 @@ public class MemberDAO {
 		String user = "root";
 		String password = "1234";
 	
-		//mysql에서 제공하는 구현클래스(=드라이버)
+		//mysql에서 제공하는 구현클래스(=드라이버) 등록 방법
 		//1. Buil Path -> Library -> external jar 추가!
 		//2. mysql-connector-j-8.1.0.jar lib폴더에 붙여넣기!
 		String driver = "com.mysql.jdbc.Driver";
@@ -61,18 +62,33 @@ public class MemberDAO {
 		
 	}
 	
+	public void dbClose() {
+		
+		try {
+			//rs or ps or conn 객체가 생성되어있을 때만 close
+			if(rs!=null) rs.close();
+			if(ps!=null) ps.close();
+			if(conn!=null) conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	// DB에 회원 저장 동작
 	public int memberInsert(MemberVO vo) {
 		//																? = 파라메터 1,2,3,4,5,6
 		String SQL = "insert into member(id, pass, name, age, email, phone) values(?,?,?,?,?,?)";
-		//연결객체(Connection 생성.)
+		//연결객체(Connection conn 생성.)
 		getConnect();
 		int count = -1;//쿼리 성공여부
 		
 		try {
 			//prepareStatement(SQL) 메서드 호출. 
 			//1. 불완전한 SQL문장을 DB에 전송 : 미리 컴파일(precompile) 시켜놔서 속도 up
-			//2. PreparedStatement ps 객체 반환 : SQL문장을 전송하는 객체, 컴파일된 SQL문 갖고 있다.
+			//2. PreparedStatement ps 객체 생성 : SQL문장을 전송하는 객체, 컴파일된 SQL문 갖고 있다.
 			ps = conn.prepareStatement(SQL);
+			//vo로부터 get -> set
 			ps.setString(1, vo.getId());
 			ps.setString(2, vo.getPass());
 			ps.setString(3, vo.getName());
@@ -80,15 +96,54 @@ public class MemberDAO {
 			ps.setString(5, vo.getEmail());
 			ps.setString(6, vo.getPhone());
 			
-			//완성된 SQL문 전송(실행) 성공이면 1, 실패면 0
+			//완성된 SQL문 DB에 전송(실행)!! 성공이면 1, 실패면 0
+			//update() : insert는 테이블 row수 변화 수반함.
 			count = ps.executeUpdate(); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//try or catch 무관하게 finally는 무조건 실행.
+		} finally {
+			dbClose();
+		}
+		
+		return count;
+	}
+
+	public ArrayList<MemberVO> memberList() {
+		
+		String SQL = "select * from member";
+		getConnect();
+		
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		
+		try {
+			ps = conn.prepareStatement(SQL);
+			//rs(결과집합, 커서) : 쿼리수행 -> select한 결과 담겨져있다.
+			rs = ps.executeQuery(); 
+			
+			while(rs.next()) {
+				//rs(table)에서 각 컬럼에 해당하는 값 가져오기. 
+				int num = rs.getInt("num");
+				String id = rs.getString("id");
+				String pass = rs.getString("pass");
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				String email = rs.getString("email");
+				String phone = rs.getString("phone");
+				
+				//vo로 묶고. 
+				MemberVO vo = new MemberVO(num, id, pass, name, age, email, phone);
+				
+				//list에 담고.
+				list.add(vo);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return count;
 		
-		
+		return list;
 		
 	}
 	
