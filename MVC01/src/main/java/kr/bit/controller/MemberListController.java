@@ -50,6 +50,8 @@ public class MemberListController extends HttpServlet {
 		
 		out.println("<body>");
 
+		out.println("<h1>회원 전체 리스트</h1>");
+		
 		out.println("<table class = 'table' 'table-borderd'>");
 		
 		out.println("<thead>");
@@ -62,6 +64,7 @@ public class MemberListController extends HttpServlet {
 		out.println("<th>나이</th>");
 		out.println("<th>이메일</th>");
 		out.println("<th>전화번호</th>");
+		out.println("<th>삭제하기</th>");
 		out.println("</tr>");
 		
 		out.println("</thead>");
@@ -81,16 +84,24 @@ public class MemberListController extends HttpServlet {
 //		out.println("</tr>");
 //		}
 
-		// 2. 향상된 for문 
+		// 2. 향상된 for문 : list에서 vo하나씩 뽑아온다. 
 		for(MemberVO vo : list) {
 			out.println("<tr>");
 			out.println("<td>" + vo.getNum() + "</td>");
-			out.println("<td>" + vo.getId() + "</td>");
+			out.println("<td> <a href='memberContent.do?num=" + vo.getNum() + "'>" + vo.getId() + "</a> </td>");
+			// http://localhost:8080/MVC01/memberContent.do?num=1
+			// url ? 변수 = 값 & 변수 = 값 : 클라이언트 -> 서버 Get방식으로 요청 시, parameter 넘겨주는 방식.
+			// 이때의 값 = QueryString이라고 한다. 요청받은 서블릿에서 getParameter()로 받는다.
+			// MemberContentController를 Get방식으로 요청하면서, num = 1   전달.(form 태그에서, Get방식)
+			// <a> : only Get방식, <form> : Get + Post 방식
 			out.println("<td>" + vo.getPass() + "</td>");
 			out.println("<td>" + vo.getName() + "</td>");
 			out.println("<td>" + vo.getAge() + "</td>");
 			out.println("<td>" + vo.getEmail() + "</td>");
 			out.println("<td>" + vo.getPhone() + "</td>");
+			out.println("<td><a href='memberDelete.do?num=" + vo.getNum() + "'>삭제하기</a> </td>");
+			// http://localhost:8080/MVC01/memberDelete.do?num=1
+			// MemberDeleteController를 Get방식으로 요청하면서, num = 1 전달.
 			out.println("</tr>");
 		}
 

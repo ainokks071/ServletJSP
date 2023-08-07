@@ -29,6 +29,8 @@ public class MemberInsertController extends HttpServlet {
 		*/
 		request.setCharacterEncoding("utf-8");
 		
+		// cf) Get방식으로 client->server 파라메터 전달해보기.
+		// http://localhost:8080/MVC01/memberInsert.do?id=kks0701&pass=1234&name=홍길동&age=40&email=hong@naver.com&phone=010-1234-1234
 		
 		//1. 파라메터수집(VO) : Client(form태그 내 input태그의 name속성과 일치)으로부터 전달된 데이터 추출 후, VO로 묶기.
 		String id = request.getParameter("id");
@@ -69,7 +71,8 @@ public class MemberInsertController extends HttpServlet {
 		//현재 위치 : http://localhost:8080/MVC01/memberInsert.do
 		//redirect목적지 : http://localhost:8080/MVC01/memberList.do
 		//서버(서블릿,컨트롤러)에서 또 다른 서버(서블릿,컨트롤러) 재요청필요. : redirect
-		PrintWriter out = response.getWriter();
+		
+//		PrintWriter out = response.getWriter();
 		
 		if(count > 0) {
 			//가입 성공 -> 추후 redirect.. 회원 리스트 화면으로.

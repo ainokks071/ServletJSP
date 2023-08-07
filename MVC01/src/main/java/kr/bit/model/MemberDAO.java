@@ -146,6 +146,104 @@ public class MemberDAO {
 		return list;
 		
 	}
+
+	public int memberDelete(int num) {
+	
+		String SQL = "delete from member where num = ?";
+		getConnect();
+		int count = -1;
+		
+		try {
+			//불완전 쿼리 precompile 
+			ps = conn.prepareStatement(SQL);
+			
+			//쿼리 완성 
+			ps.setInt(1, num);
+			
+			//쿼리전송! 성공 1 실패 0, row의 수 변화O -> executeUpdate!
+			count = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dbClose();
+		}
+		
+		return count;
+
+	}
+
+	public MemberVO memberContent(int num) {
+		
+		String SQL = "select * from member where num = ?";
+		getConnect();
+		
+		MemberVO vo = null;
+		
+		try {
+			//불완전 쿼리 precompile 
+			ps = conn.prepareStatement(SQL);
+			
+			//쿼리 완성 
+			ps.setInt(1, num);
+			
+			//DB로 쿼리전송! 성공 1 실패 0, row의 수 변화O -> executeUpdate!
+			rs = ps.executeQuery();
+			
+
+			if(rs.next()) {
+				//rs(table)에서 각 컬럼에 해당하는 값 가져오기. 
+				num = rs.getInt("num");
+				String id = rs.getString("id");
+				String pass = rs.getString("pass");
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				String email = rs.getString("email");
+				String phone = rs.getString("phone");
+				
+				//vo로 묶기 . 
+				vo = new MemberVO(num, id, pass, name, age, email, phone);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dbClose();
+		}
+		
+		return vo;
+	}
+
+//	public void memberUpdate(int num, int age, String email, String phone) {
+	public int memberUpdate(MemberVO vo) {
+		
+		String SQL = "update member set age=?, phone=?, email=? where num= ? ";
+		getConnect();
+		int cnt = -1;
+		try {
+			ps = conn.prepareStatement(SQL);
+			
+			ps.setInt(1, vo.getAge());
+			ps.setString(2, vo.getPhone());
+			ps.setString(3, vo.getEmail());
+			ps.setInt(4, vo.getNum());
+			
+//			either (1) the row count for SQL Data Manipulation Language (DML) statements
+//			or (2) 0 for SQL statements that return nothing
+//			즉, affected row(변화가 생긴 행의 갯수!)
+//			따라서, select(Q) / insert(U), delete(U), update(U)			
+			cnt = ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dbClose();
+		}
+
+		return cnt;
+		
+	}
 	
 	
 	
