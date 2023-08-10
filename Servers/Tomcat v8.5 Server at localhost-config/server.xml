@@ -168,7 +168,7 @@
 		Dynamic Web Project 생성 시 Context Root(MVC01) -> path(src/main/webapp)
 		 Servers탭 -> Add and Remove!!
 		 서버 구동과 함께 톰캣이 server.xml의 context를 읽는다.-->
-        <Context docBase="MVC01" path="/MVC01" reloadable="true" source="org.eclipse.jst.jee.server:MVC01"/><Context docBase="MVC02" path="/MVC02" reloadable="true" source="org.eclipse.jst.jee.server:MVC02"/></Host>
+        <Context docBase="MVC03" path="/MVC03" reloadable="true" source="org.eclipse.jst.jee.server:MVC03"/></Host>
     </Engine>
   </Service>
 </Server>

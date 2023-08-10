@@ -5,8 +5,6 @@
 
 <% 	MemberDAO dao = new MemberDAO();
 	ArrayList<MemberVO> list = dao.memberList();
-	
-	response.setContentType("text/html;charset=UTF-8");
 %> 
  
 <!-- view용 JSP ! -->
