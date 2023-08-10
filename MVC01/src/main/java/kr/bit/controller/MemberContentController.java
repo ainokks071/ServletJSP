@@ -18,15 +18,17 @@ public class MemberContentController extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//회원 num 받기.
+//		request.setCharacterEncoding("utf-8"); 한글데이터 넘어오지 않음.
+		
+		//회원 num 받아 정수로 형변환.
 		int num = Integer.parseInt(request.getParameter("num"));
 
 		MemberDAO dao = new MemberDAO();
-
+		//회원 1명 가져오기. select
 		MemberVO vo = dao.memberContent(num);
 
 
-		//view 한글 
+		//view : MIME TYPE 지정 
 		response.setContentType("text/html;charset=UTF-8");
 
 		PrintWriter out = response.getWriter();
@@ -78,6 +80,7 @@ public class MemberContentController extends HttpServlet {
 		
 		out.println("<tr>");
 		out.println("<th>나이</th>");
+		//사용자가 vo.getAge() 부분 수정해서 넘길 것.
 		out.println("<td> <input type='text' name='age' value='" + vo.getAge() + "'/>" + "</td>");
 		out.println("</tr>");
 		
@@ -95,7 +98,9 @@ public class MemberContentController extends HttpServlet {
 		out.println("<td>");
 		out.println("</td>");		
 		out.println("<td colspan='2'>");
+		//수정하려면, 
 		out.println("<input type='submit' class='btn btn-primary' value='수정하기'/>");
+		
 		out.println("<input type='reset' class='btn btn-primary' value='취소'/>");
 		out.println("<a href='memberList.do'> 리스트로 <a/>");
 		out.println("</td>");

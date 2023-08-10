@@ -15,11 +15,13 @@ public class MemberUpdateController extends HttpServlet {
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		request.setCharacterEncoding("utf-8");
+		//한글데이터 넘어오지 않았음.
+//		request.setCharacterEncoding("utf-8");
 		
 		//파라메터 수집. num은 hidden속성으로 넘어왔다.(식별자 역할)
 		int num = Integer.parseInt(request.getParameter("num"));
 		
+		//수정된 값 받기 
 		int age = Integer.parseInt(request.getParameter("age"));
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");

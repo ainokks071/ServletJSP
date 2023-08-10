@@ -36,6 +36,8 @@ public class MemberListController extends HttpServlet {
 		
 		response.setContentType("text/html;charset=UTF-8"); //MIME TYPE 지정 !
 
+		
+		// view
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
 
@@ -84,15 +86,16 @@ public class MemberListController extends HttpServlet {
 //		out.println("</tr>");
 //		}
 
+		//DAO의 memberList() 호출해서 DB에 저장되어있는 테이블 list를 조회해왔음.
 		// 2. 향상된 for문 : list에서 vo하나씩 뽑아온다. 
 		for(MemberVO vo : list) {
 			out.println("<tr>");
 			out.println("<td>" + vo.getNum() + "</td>");
 			out.println("<td> <a href='memberContent.do?num=" + vo.getNum() + "'>" + vo.getId() + "</a> </td>");
-			// http://localhost:8080/MVC01/memberContent.do?num=1
+			// http://localhost:8080/MVC01/memberContent.do?num=1 요청!
 			// url ? 변수 = 값 & 변수 = 값 : 클라이언트 -> 서버 Get방식으로 요청 시, parameter 넘겨주는 방식.
 			// 이때의 값 = QueryString이라고 한다. 요청받은 서블릿에서 getParameter()로 받는다.
-			// MemberContentController를 Get방식으로 요청하면서, num = 1   전달.(form 태그에서, Get방식)
+			// MemberContentController를 Get방식으로 요청하면서, num = 1   전달.(마치 form 태그에서, Get방식)
 			// <a> : only Get방식, <form> : Get + Post 방식
 			out.println("<td>" + vo.getPass() + "</td>");
 			out.println("<td>" + vo.getName() + "</td>");
