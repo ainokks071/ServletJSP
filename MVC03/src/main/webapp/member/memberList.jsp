@@ -3,9 +3,14 @@
 <%@ page import="kr.bit.model.*" %>    
 <%@ page import="java.util.*" %>    
 
-<% ArrayList<MemberVO> list = (ArrayList<MemberVO>)request.getAttribute("list"); %>
+<!-- 객체 바인딩  -->
+<% ArrayList<MemberVO> list = (ArrayList<MemberVO>) request.getAttribute("list"); %>
  
-<!-- view용 JSP ! -->
+ 
+<!-- 클라이언트에게 View페이지를 응답한다.
+	 but, 
+	 forward기법이므로 최초 요청이 Contoller(Servlet)에 왔으므로, 응답 url은 jsp가 아닌, servlet이다. -->
+	  
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +56,10 @@
 			<tr>
 			<td><%=vo.getNum()%></td>
 			<!-- a태그 : get방식으로 QueryString 전달. -->
-			<td> <a href="memberContent.do?num=<%=vo.getNum()%>"><%=vo.getId()%></a></td>
+			<%-- <td> <a href="memberContent.do?num=<%=vo.getNum()%>"><%=vo.getId()%></a></td> --%>
+			<td>
+			<input type="button" value="<%=vo.getId()%>" class="btn btn-outline-info" onclick="location.href='memberContent.do?num=<%=vo.getNum()%>'"/>
+			</td>
 			<td><%=vo.getPass()%></td>
 			<td><%=vo.getName()%></td>
 			<td><%=vo.getAge()%></td>
@@ -68,7 +76,6 @@
 		<tr>
 		<td colspan='8' align='center'>
 		<!-- <a href = "memberRegister.html">가입하기</a> --> <!-- 자바스크립트 location. -->
-		<!-- submit (X) -->
 		<input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='member/memberRegister.html'"/>
 		</td>
 		

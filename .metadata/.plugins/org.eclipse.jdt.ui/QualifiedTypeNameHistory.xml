@@ -12,6 +12,7 @@
     <fullyQualifiedTypeName name="java.sql.DriverManager"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="kr.bit.model.MemberDAO"/>
-    <fullyQualifiedTypeName name="kr.bit.model.MemberVO"/>
     <fullyQualifiedTypeName name="java.io.PrintWriter"/>
+    <fullyQualifiedTypeName name="kr.bit.model.MemberVO"/>
+    <fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
 </qualifiedTypeNameHistroy>

@@ -21,6 +21,7 @@ public class MemberUpdateController extends HttpServlet {
 		//파라메터 수집. num은 hidden속성으로 넘어왔다.(식별자 역할)
 		int num = Integer.parseInt(request.getParameter("num"));
 		
+		
 		//수정된 값 받기 
 		int age = Integer.parseInt(request.getParameter("age"));
 		String email = request.getParameter("email");

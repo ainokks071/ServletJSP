@@ -31,11 +31,19 @@ public class MemberListController extends HttpServlet {
 //		System.out.println(list);
 		
 		
-		//view로 전달.
-		//포워딩기법. 객체바인딩. controller와 view 연결!!
+		
+		
+		//Model2의 핵심 : controller와 view 사이의 연동(forward 기법)!!
+		
+		//1. 객체 바인딩 : View에게 list데이터 전달
+		//request객체(메모리 공간)에 list객체(데이터)를 저장! -> view에서 getAttribute로 추출할 것이다.
 		request.setAttribute("list", list);
 		
+		//2. forward : 특정 JSP에게 View페이지 요청 의뢰(RequestDispatcher)
+		//포워딩하기 : Controller가 갖고있는 request, response객체를 jsp에게 넘겨준다.
 		RequestDispatcher rd = request.getRequestDispatcher("member/memberList.jsp");
+		//따라서, 동일한 클라이언트에 대한 request, response객체를 Controller, jsp가 동일하게 소유한다.
+		//request객체에는 list데이터가 저장되어있으므로, jsp에서 그 데이터를 추출할 수 있다.
 		rd.forward(request, response);
 		
 		
