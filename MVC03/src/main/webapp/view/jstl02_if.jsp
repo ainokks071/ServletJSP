@@ -12,11 +12,12 @@
 </head>
 <body>
 
-<!--jstl은 if문만 있음. -->
-<c:if test="${cnt% 2==0}">
+<!--JSTL은 if문만 있음. -->
+<c:if test="${cnt % 2 == 0}">
 짝수입니다 
 </c:if>
-<c:if test="${cnt % 2!=0}">
+
+<c:if test="${cnt % 2 !=0}">
 홀수입니다 
 </c:if>
 

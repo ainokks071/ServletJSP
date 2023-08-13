@@ -31,6 +31,7 @@ public class MemberContentController extends HttpServlet {
 		
 		//view : 포워드, 객체바인딩.		
 		request.setAttribute("vo", vo);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("member/memberContent.jsp");
 		rd.forward(request, response);
 		
