@@ -55,6 +55,8 @@ public class MemberFrontController extends HttpServlet {
 		String nextPage = null;
 		
 		//3. 요청에 따른 분기 작업.
+//		FrontController -> multiple POJO
+//		: RequestMapping("/memberRegister.do" <-> new MemberRegisterController();)
 		
 		if(command.equals("/memberRegister.do")) {
 		 
