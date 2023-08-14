@@ -90,7 +90,8 @@ JSTL + EL 사용
 			<tr>
 		<td colspan='8' align='center'>
 		<!-- <a href = "memberRegister.html">가입하기</a> --> <!-- 자바스크립트 location. -->
-		<input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='member/memberRegister.html'"/>
+<!-- 		<input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='member/memberRegister.html'"/> -->
+		<input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='memberRegister.do'"/>
 		</td>
 		
 		</tr> 
