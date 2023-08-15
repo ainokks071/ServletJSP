@@ -66,7 +66,7 @@ public class MemberFrontController extends HttpServlet {
 		
 		
 		
-		
+/*		
 		
 //		HandlerMapping : URL요청과 해당하는 POJO 1:1매칭  
 		if(command.equals("/memberRegister.do")) {
@@ -197,7 +197,7 @@ public class MemberFrontController extends HttpServlet {
 			}
 		}
 		
-		
+		*/
 	}
 
 }
