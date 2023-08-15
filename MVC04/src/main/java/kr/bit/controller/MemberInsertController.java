@@ -39,9 +39,7 @@ public class MemberInsertController implements Controller {
 		
 		if(count > 0) {
 			
-//			response.sendRedirect("memberList.do");
-			
-			nextPage = "memberList.do";
+			nextPage = "redirect:memberList.do";
 			
 		} else {
 			

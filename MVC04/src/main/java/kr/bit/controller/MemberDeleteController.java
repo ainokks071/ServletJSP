@@ -22,8 +22,8 @@ public class MemberDeleteController implements Controller {
 		String nextPage = null;
 		
 		if(count > 0) {
-//			response.sendRedirect("memberList.do");
-			nextPage = "memberList.do";
+
+			nextPage = "redirect:memberList.do";
 			
 		} else {
 			

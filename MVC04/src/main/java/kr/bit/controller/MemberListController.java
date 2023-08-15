@@ -17,13 +17,15 @@ public class MemberListController implements Controller {
 	public String requestHandler(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		//모델연동 
 		MemberDAO dao = new MemberDAO();
 		ArrayList<MemberVO> list = dao.memberList();
 		
+		//객체바인딩 
 		request.setAttribute("list", list);
 		
 		//다음 페이지 안내.
-		return "member/memberList.jsp";
+		return "WEB-INF/member/memberList.jsp";
 	}
 
 }

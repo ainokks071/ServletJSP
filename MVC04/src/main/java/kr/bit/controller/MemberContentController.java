@@ -18,12 +18,12 @@ public class MemberContentController implements Controller {
 		int num = Integer.parseInt(request.getParameter("num"));
 
 		MemberDAO dao = new MemberDAO();
-		
 		MemberVO vo = dao.memberContent(num);
 
+		//객체바인딩 
 		request.setAttribute("vo", vo);
 		
-		String nextPage = "member/memberContent.jsp";
+		String nextPage = "WEB-INF/member/memberContent.jsp";
 		
 		return nextPage;
 	}

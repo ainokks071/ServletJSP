@@ -34,8 +34,7 @@ public class MemberUpdateController implements Controller {
 		
 		if(cnt > 0) {
 
-//			response.sendRedirect("memberList.do");
-			nextPage = "memberList.do";
+			nextPage = "redirect:memberList.do";
 			
 			
 		} else {
