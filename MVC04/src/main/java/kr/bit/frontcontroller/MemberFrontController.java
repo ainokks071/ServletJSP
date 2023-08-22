@@ -21,8 +21,12 @@ import kr.bit.model.MemberDAO;
 import kr.bit.model.MemberVO;
 
 /* FrontController : 클라이언트의 모든 요청을 받겠다.(대표 안내원 역할)
--> Spring에서의 DispatcherServlet과 동일.
--> 역할이 정해져있다. */
+	- Spring에서의 DispatcherServlet과 동일.
+	- 역할이 정해져있다.
+	- 1. 요청 url 추출하기(command)
+	- 2. HandlerMapping에 command를 보내서 해당하는 POJO 얻기
+	- 3. POJO에게 일시키기(DAO연동, 객체바인딩, nextPage 반환)
+	- 4. nextPage를 받아와서 redirect or forward    */
 
 @WebServlet("*.do")
 public class MemberFrontController extends HttpServlet {
@@ -56,26 +60,56 @@ public class MemberFrontController extends HttpServlet {
 		Controller controller = null;
 		String nextPage = null;
 		
-//		2. 요청에 따른 분기 작업. if ~ else if --> HandlerMapping클래스
-//		FrontController -> 여러개의 POJO
-//		url과 POJO 연결 기능.
+		
+/*		2. 요청에 따른 분기 작업. 초기 if ~ else if --> HandlerMapping클래스(HashMap 활용)
+		FrontController -> 여러개의 POJO
+*/
+		
+//		HandlerMapping : 요청 url과 해당 POJO mapping
+		//클라이언트의 요청이 frontcontroller에 들어올 때마다 hashmap객체 생성된다. 
 		HandlerMapping mapping = new HandlerMapping();
-		controller = mapping.getController(command);
+		//url에 해당하는 POJO 얻어옴. 
+		controller = mapping.getPOJO(command);
+		
+		//POJO에게 일을 시킴.(DAO연동, 객체바인딩, nextPage반환 )
 		nextPage = controller.requestHandler(request, response);
 		
+//		3. redirect or forward 분기
+		if(nextPage != null) {
+//			nextPage에 redirect: 문자열이 포함되어 있으면 redirect
+			if(nextPage.indexOf("redirect:") != -1) {
+				response.sendRedirect(nextPage.split(":")[1]);
+//			없으면 forward	
+			} else {
+//				RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+				RequestDispatcher rd = request.getRequestDispatcher(ViewResolver.makeView(nextPage));
+				rd.forward(request, response);
+			}
+		}
 		
 		
 		
-/*		
+		
+		
+		
+		
+		
+		
+		
+/*		핸들러매핑으로 아래 코드 대체..
 		
 //		HandlerMapping : URL요청과 해당하는 POJO 1:1매칭  
+ * 
+ * 
+ * 
 		if(command.equals("/memberRegister.do")) {
 //		url 경로가 .html or .jsp 나타나지 않도록 하기위해 redirect X forward O
 //		정리하자면, html이나 jsp화면으로 넘길 때는 forward 사용하자..!
-		controller = new MemberRegisterController();
-		nextPage = controller.requestHandler(request, response);
+		controller = new MemberRegisterController(); //POJO
+		nextPage = controller.requestHandler(request, response); //POJO에게 일시키기.
 
 //		forward or redirect 중복되는코드 -> if ~ else로 외부로 추출하면 -> HandlerMapping 완성
+ * 
 //		RequestDispatcher rd = request.getRequestDispatcher(nextPage);
 //		rd.forward(request, response);
 		
@@ -183,21 +217,11 @@ public class MemberFrontController extends HttpServlet {
 
 		}
 		
-//		redirect or forward 분기 -> 
-//		사전작업 : POJO에서 "redirect: ~~ " 으로 변경.
+ */
 		
-		if(nextPage != null) {
-			if(nextPage.indexOf("redirect:") != -1) {
-//delete insert update redirect:~~
-				response.sendRedirect(nextPage.split(":")[1]);
-			} else {
-//register content list
-				RequestDispatcher rd = request.getRequestDispatcher(nextPage);
-				rd.forward(request, response);
-			}
-		}
 		
-		*/
+
+		
 	}
 
 }

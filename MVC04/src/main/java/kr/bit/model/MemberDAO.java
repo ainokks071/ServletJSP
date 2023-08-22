@@ -13,9 +13,9 @@ import java.util.ArrayList;
 //JDBC -> MyBatis, JPA : JDBC는 맛보기.
 public class MemberDAO {
 	
-	//기본적으로, 커넥션 객체 필요.
+	//기본적으로, DB연결할 커넥션 객체 필요.
 	private Connection conn;
-	//SQL문 전송 객체 
+	//SQL문 전송 객체
 	private PreparedStatement ps;
 	//db에서 가져온 데이터 저장 객체 
 	private ResultSet rs;

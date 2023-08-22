@@ -164,11 +164,11 @@
 		 서버 구동과 함께 톰캣이 server.xml의 context를 읽는다.-->
 		<Context docBase="/Users/kks/dev-study/ServletJSP/WEB/webapp" path="/web"/>
 		
-		<!--톰캣 컨테이너에 우리가 만든 웹 어플리케이션(자동)을 등록한다.(Context 등록!)
-		Dynamic Web Project 생성 시 Context Root(MVC04) -> path(src/main/webapp)
+		<!--톰캣 컨테이너에 우리가 만든 웹 어플리케이션을 등록한다.(= Context 등록)
+		Dynamic Web Project 생성 시 Context Root(MVC05) -> path(src/main/webapp)
 		 Servers탭 -> Add and Remove!! -> server.xml 자동으로 변경되네 
 		 서버 구동과 함께 톰캣이 server.xml의 context를 읽는다.-->
-        <Context docBase="MVC04" path="/MVC04" reloadable="true" source="org.eclipse.jst.jee.server:MVC04"/></Host>
+        <Context docBase="MVC05" path="/MVC05" reloadable="true" source="org.eclipse.jst.jee.server:MVC05"/></Host>
     </Engine>
   </Service>
 </Server>

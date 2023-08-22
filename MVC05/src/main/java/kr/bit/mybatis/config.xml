@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MyBatis API (mybatis-3.4.6.jar : 클래스모음)가 config.xml파일의 설정 정보들을 읽는다. 
+	 config.xml파일로부터 SqlSessionFactory객체를 생성할 것이다. -->
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <!-- 1. db.properties 연결 : driver, url, username, password -> DB접속 정보 포함 -->	
+  <properties resource="kr/bit/mybatis/db.properties"/>
+  <!-- alias = 별칭 -->
+  <typeAliases>
+  <!-- 에러 : kr.bit.modle.MemberVO 오타!! -> config.xml로 부터 Factory객체 생성 에러발생! -->
+  	<typeAlias type="kr.bit.model.MemberVO" alias="membervo"/>
+  
+  </typeAliases>	
+  
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <!-- POOLED : ConnectionPool기법을 사용하겠다. -->
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  
+  <!--2. Mapper.xml 연결 : SQL문  -->
+  <mappers>
+    <mapper resource="kr/bit/mybatis/MemberMapper.xml"/>
+  </mappers>
+  
+</configuration>

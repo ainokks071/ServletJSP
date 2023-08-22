@@ -25,7 +25,8 @@ public class MemberListController implements Controller {
 		request.setAttribute("list", list);
 		
 		//다음 페이지 안내.
-		return "WEB-INF/member/memberList.jsp";
+//		return "/WEB-INF/member/memberList.jsp"; ViewResolver 활용할 것(논리적 이름)
+		return "memberList";
 	}
 
 }
