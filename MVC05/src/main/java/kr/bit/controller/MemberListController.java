@@ -18,14 +18,14 @@ public class MemberListController implements Controller {
 	public String requestHandler(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		//모델연동 
+		//1. 모델연동 
 		MemberDAO dao = new MemberDAO();
-		ArrayList<MemberVO> list = (ArrayList<MemberVO>)dao.memberList();
+		ArrayList<MemberVO> list = (ArrayList<MemberVO>)dao.memberList(); //DAO -> DB -> DAO -> Con
 		
-		//객체바인딩 
+		//2. 객체바인딩 
 		request.setAttribute("list", list);
 		
-		//다음 페이지 안내.
+		//3. 다음 페이지 안내.
 //		return "/WEB-INF/member/memberList.jsp"; ViewResolver 활용할 것(논리적 이름)
 		return "memberList";
 	}

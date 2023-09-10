@@ -15,12 +15,13 @@ public class MemberContentController implements Controller {
 	public String requestHandler(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		//get방식으로 넘어온 num추출
 		int num = Integer.parseInt(request.getParameter("num"));
 
 		MemberDAO dao = new MemberDAO();
 		MemberVO vo = dao.memberContent(num);
 
-		//객체바인딩 
+		//객체바인딩 -> JSP에서 EL태그($기호)로 추출할 것!(getAttribute효과) 
 		request.setAttribute("vo", vo);
 		
 //		String nextPage = "/WEB-INF/member/memberContent.jsp"; ViewResolver 활용할 것(논리적 이름)

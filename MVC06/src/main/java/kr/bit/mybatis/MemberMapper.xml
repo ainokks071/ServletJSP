@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 이 Mapper파일의 FullName(패키지명 + 파일이름) -> 여러 Mapper의 이름 중복 방지 ! -->
+<mapper namespace="kr.bit.mybatis.MemberMapper">
+
+
+  		<!--id:SQL문 식별자. resultType : MemberVO 타입으로 묶는다는 것을 알려줌.(alias)  -->
+  		<!--조회된 회원 각각을 vo로 묶고, list에 담는 작업을 알아서 해준다. -->
+  <select id="memberList" resultType="memberVO">
+  	select * from member
+  </select>
+  
+  <!--parameterType : DAO에서 보낸 VO객체 타입 설정 -->
+  <insert id="memberInsert" parameterType="memberVO">
+  <!--MyBatis문법 : #{ }를 이용해서 넘어온 VO의 필드값 추출. -->
+	insert into member(id, pass, name, age, email, phone)
+	 values(
+	 #{id},
+	 #{pass},
+	 #{name},
+	 #{age},
+	 #{email},
+	 #{phone}
+	 )
+  </insert>
+  
+  <delete id="memberDelete" parameterType="Integer">
+  	delete from member where num=#{num}
+  </delete>
+  
+ 													<!--select의 결과 -> vo로 묶는 작업을 알아서 해준다.  -->
+  <select id="memberContent" parameterType="Integer" resultType="memberVO">
+    select * from member where num=#{num}
+  </select>
+  
+  <update id="memberUpdate" parameterType="memberVO">
+  	update member set age=#{age}, phone=#{phone}, email=#{email} where num=#{num}
+  </update>
+  
+ 													<!--select의 결과 -> String -->
+  <select id="memberLogin" parameterType="memberVO" resultType="String">
+    select name from member where id=#{id} and pass=#{pass}
+  </select>
+  
+</mapper>

@@ -4,9 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- 객체 바인딩. 
-    	getAttribute대신, JSTL, EL 사용해보기 !-->
+    	getAttribute대신, JSTL, EL($기호 : getAttribute효과) 사용해보기 !-->
 <%-- <% MemberVO vo = (MemberVO) request.getAttribute("vo");%> --%>
-
+<!-- 내장객체 -->
 <c:set var='ctx' value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>

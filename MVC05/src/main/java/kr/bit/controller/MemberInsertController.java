@@ -17,7 +17,7 @@ public class MemberInsertController implements Controller {
 		
 		String ctx = request.getContextPath(); //   /MVC04
 		
-		request.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8"); //한글 깨짐 방지
 
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");

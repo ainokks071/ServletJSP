@@ -36,10 +36,10 @@ public class MemberFrontController extends HttpServlet {
 //		1. 요청 url 추출하기(command) : 클라이언트가 "어떤 요청을 했는지" 추출하기.
 //		   cf) 요청이 들어오면 request객체에 요청 경로도 저장된다.
 		String url = request.getRequestURI();
-//		System.out.println(url);     /MVC04/memberList.do
+//		System.out.println(url);     /MVC05/memberList.do
 
 		String ctx = request.getContextPath();
-//		System.out.println(ctx);     /MVC04
+//		System.out.println(ctx);     /MVC05
 		
 //		String command = url.substring(ctx.length():6, url.length():20); //url의 6~20번째 문자열 
 		String command = url.substring(ctx.length());    //url의 6번째부터 끝까지의 문자열 
@@ -61,27 +61,25 @@ public class MemberFrontController extends HttpServlet {
 		String nextPage = null;
 		
 		
-/*		2. 요청에 따른 분기 작업. 초기 if ~ else if --> HandlerMapping클래스(HashMap 활용)
-		FrontController -> 여러개의 POJO
-*/
-		
-//		HandlerMapping : 요청 url과 해당 POJO mapping
-		//클라이언트의 요청이 frontcontroller에 들어올 때마다 hashmap객체 생성된다. 
-		HandlerMapping mapping = new HandlerMapping();
-		//url에 해당하는 POJO 얻어옴. 
-		controller = mapping.getPOJO(command);
-		
-		//POJO에게 일을 시킴.(DAO연동, 객체바인딩, nextPage반환 )
+//		2. 요청에 따른 분기 작업. <초기> if ~ else if --> <수정>HandlerMapping클래스(HashMap 활용)
+//		HandlerMapping : 요청 url에 해당하는 POJO 얻어오기 (mapping)
+//		cf) 클라이언트의 요청이 frontcontroller에 들어올 때마다 hashmap객체 생성 + key,value쌍 미리 저장.
+		HandlerMapping handlerMapping = new HandlerMapping();
+//		url(key)에 해당하는 POJO(value) 얻어옴. ex) key=/memberList.do value=new MemberListController();
+		controller = handlerMapping.getPOJO(command);
+		//얻어온 POJO에게 일을 시킴.(DAO연동, 객체바인딩, nextPage반환 )
 		nextPage = controller.requestHandler(request, response);
 		
 //		3. redirect or forward 분기
 		if(nextPage != null) {
 //			nextPage에 redirect: 문자열이 포함되어 있으면 redirect
 			if(nextPage.indexOf("redirect:") != -1) {
+//				memberList.do로 재요청.
 				response.sendRedirect(nextPage.split(":")[1]);
 //			없으면 forward	
 			} else {
 //				RequestDispatcher rd = request.getRequestDispatcher(nextPage);
+//				
 				RequestDispatcher rd = request.getRequestDispatcher(ViewResolver.makeView(nextPage));
 				rd.forward(request, response);
 			}

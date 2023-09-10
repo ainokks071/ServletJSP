@@ -14,8 +14,9 @@ public class MemberDeleteController implements Controller {
 	public String requestHandler(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String ctx = request.getContextPath(); //   /MVC04
+		String ctx = request.getContextPath(); //   /MVC05
 		
+		//get방식으로 넘어온 num 추출.
 		int num = Integer.parseInt(request.getParameter("num"));
 		
 		MemberDAO dao = new MemberDAO();

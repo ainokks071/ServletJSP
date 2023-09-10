@@ -4,7 +4,7 @@
 <%@ page import="java.util.*" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
+<!-- 내장객체이용 -> ctx = /MVC05  -->    
 <c:set var='ctx' value="${pageContext.request.contextPath}" />
 
 <!-- 객체 바인딩  -->
@@ -13,7 +13,7 @@
  
 <!-- 클라이언트에게 View페이지를 응답한다.
 	 but, 
-	 forward기법이므로 최초 요청이 Contoller(Servlet)에 왔으므로, 응답 url은 jsp가 아닌, servlet이다. -->
+	 최초 요청이 Controller로 왔고, forward로 jsp로 넘겼기 때문에 응답 url은 jsp가 아닌, controller이다. url변경이 x -->
 	  
 <!DOCTYPE html>
 <html>
@@ -36,8 +36,6 @@
 <body>
 
 	<h1>회원 전체 리스트</h1>
-
-JSTL + EL 사용
 	
 	<table class = 'table table-borderd'>
 		
@@ -59,6 +57,7 @@ JSTL + EL 사용
 		<tbody>
 
 			<%-- <%for(MemberVO vo : list) {  %> --%>
+			<!-- 객체바인딩 후 forward로 넘어온 list!에서 vo를 하나씩 꺼낸다.(반복문) -->
 			<c:forEach var="vo" items="${list}">
 				<tr>
 					<td>
@@ -90,7 +89,7 @@ JSTL + EL 사용
 			<tr>
 		<td colspan='8' align='center'>
 		<!-- <a href = "memberRegister.do">회원가입 화면으로</a> --> <!-- 자바스크립트 location. -->
-		<!-- <input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='memberRegister.do'"/> -->
+		<!-- <input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='/MVC05/memberRegister.do'"/> -->
 		<!-- url경로가 ~html or ~jsp로 끝나지 않도록.. html로 요청하는 대신 controller로 요청 후, forward하자.-->
 		<input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='${ctx}/memberRegister.do'"/>
 		</td>

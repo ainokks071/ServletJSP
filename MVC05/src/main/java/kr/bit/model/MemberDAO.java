@@ -38,13 +38,15 @@ public class MemberDAO {
 			e.printStackTrace();
 		} 
 	}
-	//"미리" SqlSessionFactory객체를 만들었다.
+	//위에서 DB연결을 위해 "미리" SqlSessionFactory객체를 만들었다.
 	
 //  회원 리스트 보기.
 	public List<MemberVO> memberList() {
-//		1. SqlSession객체 얻기. -> JDBC의 Connection(DB연결객체) + Statement(DB로 SQL문전송객체)의 두가지 기능 포함.
+//		1. SqlSession객체 얻기.
+//		-> JDBC의 Connection(DB연결객체) + Statement(DB로 SQL문전송객체)의 두가지 기능 포함.
 		SqlSession session = sqlSessionFactory.openSession();
-//		2. selectList()메서드 : 회원1명의 정보들을 VO로 묶고, list에 담아준다.  	
+//		2. selectList()메서드 : 회원1명의 정보들을 VO로 묶고, list에 담아준다.
+//		JDBC보다 매우 편리하다! -> while, resultset 등등 수작업 필요 X
 //		MemberMapper.xml 내부의 식별자인 id="memberList"를 찾아, SQL문을 수행한다.(VO로 묶고, list에 담고)
 		List<MemberVO> list = session.selectList("memberList");
 //		3. 사용한 session객체 반납.
@@ -52,6 +54,8 @@ public class MemberDAO {
 		
 		return list;
 	}
+	
+	
 	
 	public int memberInsert(MemberVO vo) {
 		SqlSession session = sqlSessionFactory.openSession();
@@ -66,6 +70,7 @@ public class MemberDAO {
 	
 	public int memberDelete(int num) {
 		SqlSession session = sqlSessionFactory.openSession();
+//		mapper의 id:memberDelete, 파라메터 num
 		int cnt = session.delete("memberDelete", num);
 		session.commit();
 		session.close();
@@ -76,7 +81,7 @@ public class MemberDAO {
 	public MemberVO memberContent(int num) {
 		SqlSession session = sqlSessionFactory.openSession();
 		MemberVO vo = session.selectOne("memberContent", num);
-		session.commit();
+//		select는 commit 필요 X 
 		session.close();
 		
 		return vo;
