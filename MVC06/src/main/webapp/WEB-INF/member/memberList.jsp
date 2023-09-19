@@ -150,10 +150,14 @@
 					</td>
 						<!-- a태그 : get방식으로 QueryString 전달. -->
 						<%-- <td> <a href="memberContent.do?num=<%=vo.getNum()%>"><%=vo.getId()%></a></td> --%>
-					<td>																							<!--id버튼 클릭하면, get방식으로 MemberContentController에 num값을 보내면서 요청한다.   -->					
-						<input type="button" value="<%-- <%=vo.getId()%> --%>${vo.id}" class="btn btn-outline-info" onclick="location.href='${ctx}/memberContent.do?num=${vo.num}<%-- <%=vo.getNum()%> --%>'" />
-					</td>
+					
+					   <td>
+					 <!--id버튼 클릭하면, "get방식"으로 MemberContentController에 "num값을 보내면서 요청"한다.   -->					
+						<input type="button" value="<%-- <%=vo.getId()%> --%>${vo.id}" class="btn btn-outline-info" onclick="location.href='${ctx}/memberContent.do?num=${vo.num}'" />
+				     	</td>
+					
 					<td>
+					
 						<%-- <%=vo.getPass()%> --%>${vo.pass}
 					</td>
 					<td>
@@ -186,7 +190,15 @@
 					<!-- <a href = "memberRegister.do">회원가입 화면으로</a> --> <!-- 자바스크립트 location. -->
 					<!-- <input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='/MVC06/memberRegister.do'"/> -->
 					<!-- url경로가 ~html or ~jsp로 끝나지 않도록.. html로 요청하는 대신 controller로 요청 후, forward하자.-->
-					<input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='${ctx}/memberRegister.do'"/>
+					
+					<c:if test="${sessionScope.userId!=null}">
+					  <input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='${ctx}/memberRegister.do'" disabled="disabled"/>
+					</c:if>
+					<c:if test="${sessionScope.userId==null}">
+				      <input type="button" value="회원가입 화면으로" class="btn btn-primary" onclick="location.href='${ctx}/memberRegister.do'"/>
+					</c:if>
+					
+					
 					</td>	
 				</tr> 
 		</tbody>

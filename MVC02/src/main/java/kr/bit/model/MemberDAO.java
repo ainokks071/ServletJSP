@@ -28,7 +28,7 @@ public class MemberDAO {
 		//DB접속 URL : DB회사마다 다르다.
 		String URL = "jdbc:mysql://localhost:3306/test";
 		String user = "root";
-		String password = "1234";
+		String password = "dkssud123";
 	
 		//mysql에서 제공하는 구현클래스(=드라이버) 등록 방법
 		//1. Buil Path -> Library -> external jar 추가!

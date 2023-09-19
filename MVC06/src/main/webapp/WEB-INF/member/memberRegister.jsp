@@ -25,12 +25,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>회원 가입 화면</title>
+    <!--부트스트랩5  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <!--부트스트랩3, jquery  -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+		function add() {
+			document.form1.action = "<c:url value='/memberInsert.do' />";
+			document.form1.submit();
+		}
+		
+		function frmreset() {
+			document.form1.reset();
+		}
+		
+		function memlist() {
+			location.href="<c:url value='/memberList.do' />";
+		}
+	</script>
   </head>
+  
   <body>
-    <br>
-      <h1>회원 가입 화면</h1>
-     <br>
+  <!-- header -->
+	<div class="p-5 bg-primary text-white text-center">
+		<h1>Header : 회원 관리 시스템</h1>
+ 		<p>Resize this responsive page to see the effect!</p> 
+	</div>
+	
+	<br>
+<div class="container">
+ <h2>회원 가입 화면</h2>  
+<div class="panel panel-default">
+  <div class="panel-body">
+    <form class="form-horizontal" method="post" id="form1" name="form1">
+  		<div class="form-group">
+    		<label class="control-label col-sm-2" for="id">아이디</label>
+    		<div class="col-sm-10">
+      			<input type="text" class="form-control" id="id" name="id" placeholder="Enter id" style="width:30%">
+    		</div>
+  		</div>
+  		
+  		<div class="form-group">
+    		<label class="control-label col-sm-2" for="pass">패스워드</label>
+    		<div class="col-sm-10">
+      			<input type="password" class="form-control" id="pass" name="pass" placeholder="Enter password" style="width:30%">
+    		</div>
+  		</div>
+  		
+  		<div class="form-group">
+    		<label class="control-label col-sm-2" for="name">이름</label>
+    		<div class="col-sm-10">
+      			<input type="text" class="form-control" id="name" name="name" placeholder="Enter name" style="width:30%">
+    		</div>
+  		</div>
+  		  
+   		<div class="form-group">
+    		<label class="control-label col-sm-2" for="age">나이</label>
+    		<div class="col-sm-10">
+      			<input type="text" class="form-control" id="age" name="age" placeholder="Enter age" style="width:30%">
+    		</div>
+  		</div>
+  		 				
+  		<div class="form-group">
+    		<label class="control-label col-sm-2" for="email">이메일</label>
+    		<div class="col-sm-10">
+      			<input type="email" class="form-control" id="email" name="email" placeholder="Enter email" style="width:30%">
+    		</div>
+  		</div>  
+
+  		<div class="form-group">
+    		<label class="control-label col-sm-2" for="phone">전화번호</label>
+    		<div class="col-sm-10">
+      			<input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone" style="width:30%">
+    		</div>
+  		</div>
+	</form>
+  </div>
+  
+  <div class="panel-footer" style="text-align : center">
+  	  <input type="button" class="btn btn-primary" value="가입" onclick="add()"/>
+	  <input type="button" class="btn btn-warning" value="취소" onclick="frmreset()"/>
+	  <input type="button" class="btn btn-success" value="리스트로" onclick="memlist()"/>
+  </div>
+  
+</div>
+</div>  
+  
+
 
 <!-- JDBC는 맛보기. 어차피 요즘 사용하지 않음. MVC 공부 용도!! -->
      
@@ -38,80 +122,12 @@
 	 /(슬래쉬) -> 절대경로로 입력 -->
 <!--  <form action="/MVC06/memberInsert.do" method="post"> -->
 <!--$기호 : EL태그-->
- <form action="${ctx}/memberInsert.do" method="post">
- 
-  <table class="table">
-    <thead>
-    <tr>
-      <th scope="col"></th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  
-  <tbody>
-  
-    <tr>
-      <th scope="row">1</th>
-      <td>아이디</td>
-      <!--id(변수) = kimks071(값) -->
-      <td> <input type="text" name="id"/> </td>
-    </tr>
-    
-    <tr>
-      <th scope="row">2</th>
-      <td>패스워드</td>
-      <!--pass(변수) = 1234(값) -->
-      <td><input type="password" name="pass"/></td>
-    </tr>
-    
-    <tr>
-      <th scope="row">3</th>
-      <td>이름</td>
-      <!--name(변수) = 김경수(값) -->
-      <td><input type="text" name="name"/></td>
-      <!--한글데이터(ex) 김 : 2byte) -> 서블릿으로 전송 시(1byte + 1byte) -> 한글 깨짐 현상 발생 -->
-    </tr>
-    
-    <tr>
-      <th scope="row">4</th>
-      <td>나이</td>
-      <!--age(변수) = 33(값) -->
-      <td><input type="text" name="age"/></td>
-    </tr>
-       
-    <tr>
-      <th scope="row">5</th>
-      <td>이메일</td>
-      <!--email(변수) = ainokks071@gmail.com(값) -->
-      <td><input type="text" name="email"/></td>
-    </tr>
-    
-    <tr>
-      <th scope="row">6</th>
-      <td>전화번호</td>
-      <!--phone(변수) = 010-3014-4462(값) -->
-      <td><input type="text" name="phone"/></td>
-    </tr>    
-    
-    <tr>
-      <th scope="row"></th>
-      <td></td>
-	  <td>	  
-	  <!--전송, 초기화 -->
-	  <input type="submit" class="btn btn-primary" value="가입"/>
-	  <input type="reset" class="btn btn-warning" value="취소"/>
-	  </td>
-    </tr>
-    
-  </tbody>
-  
-</table>
 
-</form> 
-    <!-- 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script> -->
+
+<!-- footer -->
+<div class="mt-5 p-4 bg-dark text-white text-center">
+  	<p>Footer</p>
+</div>
+
   </body>
 </html>
