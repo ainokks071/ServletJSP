@@ -26,6 +26,19 @@
 	 )
   </insert>
   
+  <insert id="memberFileInsert" parameterType="memberVO">
+	insert into member(id, pass, name, age, email, phone, filename)
+	 values(
+	 #{id},
+	 #{pass},
+	 #{name},
+	 #{age},
+	 #{email},
+	 #{phone},
+	 #{filename}
+	 )
+  </insert>
+  
   <delete id="memberDelete" parameterType="Integer">
   	delete from member where num=#{num}
   </delete>

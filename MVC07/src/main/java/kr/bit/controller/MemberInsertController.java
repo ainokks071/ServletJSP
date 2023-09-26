@@ -15,9 +15,9 @@ public class MemberInsertController implements Controller {
 	public String requestHandler(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String ctx = request.getContextPath(); //  /MVC06
+		String ctx = request.getContextPath(); //  /MVC07
 		
-		request.setCharacterEncoding("utf-8"); //  form태그(post방식)로 넘어온 한글데이터 깨짐 방지
+		request.setCharacterEncoding("utf-8"); //  form태그(post방식)로 넘어온 "한글데이터 깨짐방지"
 
 //		파라메터 수집 후 VO로 묶기
 		String id = request.getParameter("id");
@@ -26,7 +26,8 @@ public class MemberInsertController implements Controller {
 		int age = Integer.parseInt(request.getParameter("age"));
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
-	
+		
+//		VO로 묶기 
 		MemberVO vo = new MemberVO();
 		vo.setId(id);
 		vo.setPass(pass);
@@ -35,9 +36,20 @@ public class MemberInsertController implements Controller {
 		vo.setEmail(email);
 		vo.setPhone(phone);
 		
+		if(request.getParameter("mode").equals("fileAdd")) {
+			String filename = request.getParameter("filename");
+			vo.setFilename(filename);
+		}
+		
 //		DAO연동 후 DB에 데이터 저장.
 		MemberDAO dao = new MemberDAO();
-		int count = dao.memberInsert(vo);
+		
+		int count = -1;
+		if(request.getParameter("mode").equals("fileAdd")) {
+			count = dao.memberFileInsert(vo);
+		} else {
+			count = dao.memberInsert(vo);
+		}
 		
 		String nextPage = null;
 		

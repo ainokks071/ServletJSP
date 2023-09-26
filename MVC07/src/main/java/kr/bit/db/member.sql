@@ -9,6 +9,7 @@ create table member (
  age int not null,
  email varchar(30) not null,
  phone varchar(30) not null,
+ filename varchar(100),
  unique key(id)
 )
 
@@ -29,3 +30,6 @@ update member set age=45, phone='010-1111-0000' where id='kimks071';
 --delete(삭제)
 delete from member where id='admin';
 delete from member;
+
+
+

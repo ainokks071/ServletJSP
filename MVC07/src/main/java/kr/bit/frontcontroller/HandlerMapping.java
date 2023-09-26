@@ -11,7 +11,6 @@ public class HandlerMapping {
 	
 	Controller controller = null;
 	String nextPage = null;
-
 	
 	//기본 생성자. 호출 시 -> HashMap객체 생성 + key/value쌍 저장(put)
 	public HandlerMapping() {
@@ -30,6 +29,8 @@ public class HandlerMapping {
 //		ajax 컨트롤러
 		mappings.put("/memberAjaxList.do", new MemberAjaxListController());
 		mappings.put("/memberAjaxDelete.do", new MemberAjaxDeleteController());
+//		회원가입 시 파일 업로드 컨트롤러 
+		mappings.put("/fileUpload.do", new FileUploadController());
 
 
 	}

@@ -34,9 +34,50 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
 	<script type="text/javascript">
+	   /* 가입 버튼 클릭 시, add()메서드 호출  */
 		function add() {
 			document.form1.action = "<c:url value='/memberInsert.do' />";
 			document.form1.submit();
+		}
+	   
+		/* 클라이언트가 회원정보 입력 후, 가입하기 버튼 클릭하면 add2()메서드 호출*/
+		function add2() {
+			/* 파일이 첨부된 경우 */
+			if($("#file").val() != '') {
+				/* 파일데이터를 서버로 전송하기 위해 FormData객체 사용 */
+				var formData = new FormData();
+/* 				FormData객체의 append()메서드 : 파일데이터를 key/value로 묶어준다.
+				$("input[name=file]")[0] : name속성이 file인 input태그들 중 첫번째(0) input태그
+				files[0] : 사용자가 업로드한 파일들 중 첫번째(0) 파일.
+ */				formData.append("file", $("input[name=file]")[0].files[0]);
+				/* 1. ajax(비동기통신)방법으로 파일자체(formData)를 서버로 전송 후, 
+				   2. 업로드 된 파일이름을 반환받아 input(hidden) : filename변수에 저장
+				   3. 모든 텍스트데이터 서버로 전송. */
+				$.ajax({
+			 	/* 1. 파일데이터를 formData에 묶어서 서버로 전송하기(비동기) : 파일 업로드!  */
+					url : "<c:url value='/fileUpload.do' />",
+					type : "post",
+					data : formData, /* 파일데이터 전송. */
+					/* formData는 단순 text가 아닌, binary데이터이므로 false로 해야한다. */
+					processData : false,
+					contentType : false,
+				/* 2. 클라이언트의 회원정보 + 파일이름 (텍스트데이터) 서버로 전송하기 */	
+					success : function(data) { /* 실제 업로드 된 파일 이름 반환 후, input(hidden) : filename변수에 저장. */
+						alert(data);
+  						$("#filename").val(data);
+						/* id, pass, name, age, email, phone, filename 7개 서버로 전송. */					
+						document.form1.action = "<c:url value='/memberInsert.do?mode=fileAdd' />";
+						document.form1.submit();
+ 	 					},
+					error : function() { alert("error"); }
+				});
+				   
+			/* 파일이 첨부되지 않은 경우  */
+			} else {
+				/* id, pass, name, age, email, phone 6개 서버로 전송 */
+				document.form1.action = "<c:url value='/memberInsert.do?mode=add' />";
+				document.form1.submit();
+			}
 		}
 		
 		function frmreset() {
@@ -79,11 +120,9 @@
 				$("#id").focus();
 			}
 		}
-		
 		/* function error() {
 			alert("컨트롤러로 요청 실패 error");
 		} */
-		
 	</script>
   </head>
   
@@ -99,6 +138,7 @@
  <h2>회원 가입 화면</h2>  
 <div class="panel panel-default">
   <div class="panel-body">
+  
     <form class="form-horizontal" method="post" id="form1" name="form1">
   		<div class="form-group">
     		<label class="control-label col-sm-2" for="id">아이디</label>
@@ -151,11 +191,19 @@
       			<input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone" style="width:30%">
     		</div>
   		</div>
-	</form>
+  		
+  		<div class="form-group">
+    		<label class="control-label col-sm-2" >첨부파일</label>
+    		<div class="col-sm-10">
+      			<input type="file" class="control-label" id="file" name="file">
+    		</div>
+  		</div>
+   				<input type="hidden" id="filename" name="filename" >
+ 	</form>
   </div>
   
   <div class="panel-footer" style="text-align : center">
-  	  <input type="button" class="btn btn-primary" value="가입" onclick="add()"/>
+  	  <input type="button" class="btn btn-primary" value="가입" onclick="add2()"/>
 	  <input type="button" class="btn btn-warning" value="취소" onclick="frmreset()"/>
 	  <input type="button" class="btn btn-success" value="리스트로" onclick="memlist()"/>
   </div>

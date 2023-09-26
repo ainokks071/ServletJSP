@@ -11,6 +11,7 @@ public class MemberVO {
 	private int age;
 	private String email;
 	private String phone; 
+	private String filename; 
 	
 	//기본생성자
 	public MemberVO() {}
@@ -24,6 +25,7 @@ public class MemberVO {
 		this.email = email;
 		this.phone = phone;
 	}
+	
 	//DB에서 데이터 출력 후, VO 생성자
 	public MemberVO(int num, String id, String pass, String name, int age, String email, String phone) {
 		this.num = num;
@@ -79,12 +81,20 @@ public class MemberVO {
 		this.phone = phone;
 	}
 	
-	//debug
+	public String getFilename() {
+		return filename;
+	}
+	
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [num=" + num + ", id=" + id + ", pass=" + pass + ", name=" + name + ", age=" + age + ", email="
-				+ email + ", phone=" + phone + "]";
+				+ email + ", phone=" + phone + ", filename=" + filename + "]";
 	}
+
 	
 	
 	
