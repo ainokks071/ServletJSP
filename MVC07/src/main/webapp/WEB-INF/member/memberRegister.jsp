@@ -40,21 +40,26 @@
 			document.form1.submit();
 		}
 	   
-		/* 클라이언트가 회원정보 입력 후, 가입하기 버튼 클릭하면 add2()메서드 호출*/
+		/* 클라이언트가 회원정보 입력 후, 가입하기 버튼 클릭하면 add2()메서드 호출
+			Ajax를 이용해서 파일업로드 구현 
+			1. 파일이 첨부된 경우
+			2. 파일이 첨부되지 않은 경우
+		*/
 		function add2() {
-			/* 파일이 첨부된 경우 */
+			/* 1. 파일이 첨부된 경우 */
 			if($("#file").val() != '') {
-				/* 파일데이터를 서버로 전송하기 위해 FormData객체 사용 */
+				/* 파일데이터를 서버(controller)로 전송하기 위해 'FormData객체' 사용 -> 'fomr태그'와 구분 */
 				var formData = new FormData();
 /* 				FormData객체의 append()메서드 : 파일데이터를 key/value로 묶어준다.
 				$("input[name=file]")[0] : name속성이 file인 input태그들 중 첫번째(0) input태그
 				files[0] : 사용자가 업로드한 파일들 중 첫번째(0) 파일.
- */				formData.append("file", $("input[name=file]")[0].files[0]);
+ */				
+ 				formData.append("file", $("input[name=file]")[0].files[0]);
 				/* 1. ajax(비동기통신)방법으로 파일자체(formData)를 서버로 전송 후, 
 				   2. 업로드 된 파일이름을 반환받아 input(hidden) : filename변수에 저장
 				   3. 모든 텍스트데이터 서버로 전송. */
 				$.ajax({
-			 	/* 1. 파일데이터를 formData에 묶어서 서버로 전송하기(비동기) : 파일 업로드!  */
+			 	/* 1. formData에 묶인 파일데이터를 서버로 전송하기(비동기) : 파일 업로드!  */
 					url : "<c:url value='/fileUpload.do' />",
 					type : "post",
 					data : formData, /* 파일데이터 전송. */
@@ -63,9 +68,10 @@
 					contentType : false,
 				/* 2. 클라이언트의 회원정보 + 파일이름 (텍스트데이터) 서버로 전송하기 */	
 					success : function(data) { /* 실제 업로드 된 파일 이름 반환 후, input(hidden) : filename변수에 저장. */
-						alert(data);
+						alert("가입 되었습니다.");
+					
   						$("#filename").val(data);
-						/* id, pass, name, age, email, phone, filename 7개 서버로 전송. */					
+						/* 사용자가 입력한 id, pass, name, age, email, phone, 첨부한 filename 7개 서버로 전송. */					
 						document.form1.action = "<c:url value='/memberInsert.do?mode=fileAdd' />";
 						document.form1.submit();
  	 					},

@@ -32,7 +32,8 @@ import kr.bit.model.MemberVO;
 public class MemberFrontController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 											throws ServletException, IOException {
-	
+//		request.setCharacterEncoding("euc-kr");
+
 //		1. 요청 url 추출하기(command) : 클라이언트가 "어떤 요청을 했는지" 추출하기.
 //		   cf) 요청이 들어오면 request객체에 요청 경로도 저장된다.
 		String url = request.getRequestURI();

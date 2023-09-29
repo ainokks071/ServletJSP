@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="kr.bit.model.*" %>    
 <%@ page import="java.util.*" %>
 
@@ -29,6 +28,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+	table td{
+								/* 최우선 적용  */
+		vertical-align : middle !important;
+	}
+</style>
 <!--자바스크립트 메서드(함수) 선언   -->
 <script type="text/javascript">
 	/* JQuery
@@ -196,54 +201,45 @@
 				<th>나이</th>
 				<th>이메일</th>
 				<th>전화번호</th>
+				<th>이미지</th>
 				<th>삭제하기</th>
 			</tr>
 		</thead>
 		<tbody>
-			<%-- <%for(MemberVO vo : list) {  %> --%>
-			<%--EL : ${ }는 getAttribute다. --%>
-			<!-- request객체에 set객체바인딩 후, memberListController로부터 forward기법으로 넘어온 data("list")에서 vo를 하나씩 꺼낸다.(반복문) -->
+			<!-- MemberListController에서 request객체에 set객체바인딩 후, forward기법으로 넘어온 data("list")에서 vo를 하나씩 꺼낸다.(반복문) -->
 			<c:forEach var="vo" items="${list}">
 				<tr>
-					<td>
-						<%-- <%=vo.getNum()%> --%>${vo.num}
-					</td>
+					<td>${vo.num}</td>
 						<!-- a태그 : get방식으로 QueryString 전달. -->
-						<%-- <td> <a href="memberContent.do?num=<%=vo.getNum()%>"><%=vo.getId()%></a></td> --%>
-					
-					   <td>
 					 <!--id버튼 클릭하면, "get방식"으로 MemberContentController에 "num값을 보내면서 요청"한다.   -->					
-						<input type="button" value="<%-- <%=vo.getId()%> --%>${vo.id}" class="btn btn-outline-info" onclick="location.href='${ctx}/memberContent.do?num=${vo.num}'" />
-				     	</td>
-					
+					<td><input type="button" value="${vo.id}" class="btn btn-outline-info" onclick="location.href='${ctx}/memberContent.do?num=${vo.num}'" /></td>
+					<td>${vo.pass}</td>
+					<td>${vo.name}</td>
+					<td>${vo.age}</td>
+					<td>${vo.email}</td>
+					<td>${vo.phone}</td>
 					<td>
-					
-						<%-- <%=vo.getPass()%> --%>${vo.pass}
+						<c:if test="${vo.filename!=null && vo.filename!=''}">
+							<%-- <img src="file_repo/${vo.filename}" width="60px" height="60px"> --%>
+							<img src="<c:out value='file_repo/${vo.filename}' />" width="120px" height="100px" />
+							<%-- <img src="<c:out value='file_repo/사진.jpeg' />" width="120px" height="100px" /> --%>
+						</c:if>	
+						<c:if test="${vo.filename==null || vo.filename==''}">
+							사진을 등록해주세요 !
+						</c:if>	
 					</td>
-					<td>
-						<%-- <%=vo.getName()%> --%>${vo.name}
-					</td>
-					<td>
-						<%-- <%=vo.getAge()%> --%>${vo.age}
-					</td>
-					<td>
-						<%-- <%=vo.getEmail()%> --%>${vo.email}
-					</td>
-					<td>
-						<%-- <%=vo.getPhone()%> --%>${vo.phone}
-					</td>
-					<td>
 						<!-- <td><a href="">삭제하기</a> </td> a태그도 QueryString 보내기 가능! get방식. -->
 																				<!-- 자바스크립트 메서드(함수) 호출 --> 
+					<td>
 					  <c:if test="${sessionScope.userId==vo.id}">	
 						<input type="button" value="삭제하기" class="btn btn-warning" onclick="deleteFn(${vo.num})"/>
 					  </c:if>	
 					  <c:if test="${sessionScope.userId!=vo.id}">	
-						<input type="button" value="삭제하기" class="btn btn-warning" onclick="deleteFn(${vo.num}<%-- <%=vo.getNum()%> --%>)" disabled="disabled"/>
+						<input type="button" value="삭제하기" class="btn btn-warning" onclick="deleteFn(${vo.num})" disabled="disabled"/>
 					  </c:if>	
 					</td>
 				</tr>
-					<%-- 		<% } %> --%>
+				
 			</c:forEach>
 				<tr>
 					<td colspan='8' align='center'>

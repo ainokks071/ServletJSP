@@ -18,6 +18,8 @@ public class MemberListController implements Controller {
 	public String requestHandler(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
+		request.setCharacterEncoding("utf-8");
+		
 		//1. 모델연동 
 		MemberDAO dao = new MemberDAO();
 		ArrayList<MemberVO> list = (ArrayList<MemberVO>)dao.memberList(); //DAO -> DB -> DAO -> Con

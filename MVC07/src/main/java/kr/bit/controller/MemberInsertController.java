@@ -11,6 +11,7 @@ import kr.bit.model.MemberVO;
 
 public class MemberInsertController implements Controller {
 
+//	request객체에 사용자가 입력한 데이터 담겨서 넘어온다.
 	@Override
 	public String requestHandler(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -54,7 +55,6 @@ public class MemberInsertController implements Controller {
 		String nextPage = null;
 		
 		if(count > 0) {
-			
 			nextPage = "redirect:"+ctx+"/memberList.do";
 		} else {
 			

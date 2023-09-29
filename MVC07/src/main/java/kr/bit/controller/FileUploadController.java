@@ -2,6 +2,7 @@ package kr.bit.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,12 +25,13 @@ public class FileUploadController implements Controller {
 			throws ServletException, IOException {
 		
 //		한글 깨짐 방지.
-//		request.setCharacterEncoding("utf-8");
-		
-//		업로드 폴더의 이름
+//		**** utf-8로 했을 때, 한글이름으로 된 이미지 출력 안됐음. euc-kr로 바꾸니 되네???
+//		**** but,, 서버 업로드 폴더에는 한글이 깨져서 저장된다... 
+		request.setCharacterEncoding("utf-8");
+//		최종 업로드 폴더(업로드되는 파일들의 저장폴더)의 이름
 		String UPLOAD_DIR = "file_repo";
-//	 	업로드 폴더의 실제 경로 이름 
-// Users/kks/dev-study/ServletJSP/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/MVC07/file_repo
+//	 	업로드 폴더의 실제 물리적 경로 이름 
+// 		Users/kks/dev-study/ServletJSP/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/MVC07/file_repo
 		String uploadPath = request.getServletContext().getRealPath(UPLOAD_DIR);
 //		업로드 폴더의 실제경로로 File객체 만들기
 		File uploadFolder = new File(uploadPath);
@@ -47,7 +49,7 @@ public class FileUploadController implements Controller {
 		factory.setSizeThreshold(1024*1024); //1MB
 		
 		String fileName = "";
-		
+
 //		API를 이용해서 request객체에 담겨서 넘어온 파일들 쉽게 꺼내오는 방법
 		ServletFileUpload upload = new ServletFileUpload(factory); //factory에 업로드 할 것.
 		try {
@@ -64,6 +66,7 @@ public class FileUploadController implements Controller {
 //					파일이 잘 넘어왔냐..
 					if(fileItem.getSize()>0) {
 						fileName = fileItem.getName();
+
 //						getName() : 원래는 파일의 절대 이름(경로포함) 추출인데, 바로 되네? 
 //						int index = fileItem.getName().lastIndexOf("/");
 //						if(index==-1) {

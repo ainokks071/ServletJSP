@@ -31,6 +31,8 @@ public class HandlerMapping {
 		mappings.put("/memberAjaxDelete.do", new MemberAjaxDeleteController());
 //		회원가입 시 파일 업로드 컨트롤러 
 		mappings.put("/fileUpload.do", new FileUploadController());
+//		회원상세페이지에서 업로드 된 파일 다운로드 컨트롤러
+		mappings.put("/fileDownload.do", new FileDownloadController());
 
 
 	}
