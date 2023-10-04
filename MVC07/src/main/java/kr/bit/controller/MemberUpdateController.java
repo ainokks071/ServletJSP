@@ -19,7 +19,6 @@ public class MemberUpdateController implements Controller {
 
 		//post방식으로 넘어온 num, age, email, phone 추출 후, VO로 묶기.
 		int num = Integer.parseInt(request.getParameter("num"));
-		
 		int age = Integer.parseInt(request.getParameter("age"));
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
@@ -29,16 +28,26 @@ public class MemberUpdateController implements Controller {
 		vo.setAge(age);
 		vo.setEmail(email);
 		vo.setPhone(phone);
-		
+
+		if(request.getParameter("mode").equals("fileAdd")) {
+			String filename = request.getParameter("filename");
+			vo.setFilename(filename);
+		}
+
 		MemberDAO dao = new MemberDAO();
-		int cnt = dao.memberUpdate(vo);
+		
+		int count = -1;
+		if(request.getParameter("mode").equals("fileAdd")) {
+			count = dao.memberFileUpdate(vo);
+		} else {
+			count = dao.memberUpdate(vo);
+		}
 		
 		String nextPage = null;
 		
-		if(cnt > 0) {
+		if(count > 0) {
 
 			nextPage = "redirect:"+ctx+"/memberList.do";
-			
 			
 		} else {
 			

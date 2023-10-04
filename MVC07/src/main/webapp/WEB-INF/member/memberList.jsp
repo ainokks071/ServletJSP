@@ -4,17 +4,27 @@
 
 <!--jstl의 core library사용 선언.  -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- 내장객체이용 -> ctx = "/MVC06"  -->    
 <c:set var='ctx' value="${pageContext.request.contextPath}" />
 
+
 <!-- 객체 바인딩  -->
 <%-- <% ArrayList<MemberVO> list = (ArrayList<MemberVO>) request.getAttribute("list"); %> --%>
+<%-- <% ArrayList<MemberVO> list = (ArrayList<MemberVO>) request.getAttribute("list");
+
+for(int i = 0; i < list.size(); i ++) {
+	String inputString = list.get(i).getFilename();
+	String charsetName = "UTF-8";
+	byte[] encodedByte = inputString.getBytes(charsetName);
+	list.get(i).setFilename( new String(encodedByte,charsetName)   )  ;
+} --%>
+
 <!-- getAttribute대신, JSTL을 사용해보자 ! --> 
  
 <!-- 클라이언트에게 View페이지를 응답한다.
 	 but, 
 	 최초 요청이 Controller로 왔고, forward로 jsp로 넘겼기 때문에 응답 url은 jsp가 아닌, controller이다. url변경이 x -->
-	  
 <!DOCTYPE html>
 <html>
 <head>
@@ -207,7 +217,7 @@
 		</thead>
 		<tbody>
 			<!-- MemberListController에서 request객체에 set객체바인딩 후, forward기법으로 넘어온 data("list")에서 vo를 하나씩 꺼낸다.(반복문) -->
-			<c:forEach var="vo" items="${list}">
+			<c:forEach var="vo"  items="${list}">
 				<tr>
 					<td>${vo.num}</td>
 						<!-- a태그 : get방식으로 QueryString 전달. -->
@@ -220,9 +230,9 @@
 					<td>${vo.phone}</td>
 					<td>
 						<c:if test="${vo.filename!=null && vo.filename!=''}">
-							<%-- <img src="file_repo/${vo.filename}" width="60px" height="60px"> --%>
-							<img src="<c:out value='file_repo/${vo.filename}' />" width="120px" height="100px" />
-							<%-- <img src="<c:out value='file_repo/사진.jpeg' />" width="120px" height="100px" /> --%>
+							<%-- <c:set var="decodedFilename" value="<%=java.net.URLDecoder.decode(vo.filename), "UTF-8")%>" /> --%>
+							<%-- <img src="<c:out value='file_repo/${fn:escapeXml(vo.filename)}'  />" width="120px" height="100px" /> --%>
+							<img src="<c:url value='file_repo/${vo.filename}'/>" width="120px" height="100px" />
 						</c:if>	
 						<c:if test="${vo.filename==null || vo.filename==''}">
 							사진을 등록해주세요 !

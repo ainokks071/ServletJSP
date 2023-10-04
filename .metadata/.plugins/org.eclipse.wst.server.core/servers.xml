@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <servers>
-  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/Tomcat v8.5 Server at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="Tomcat v8.5 Server at localhost" name="Tomcat v8.5 Server at localhost" runtime-id="Apache Tomcat v8.5" server-type="org.eclipse.jst.server.tomcat.85" server-type-id="org.eclipse.jst.server.tomcat.85" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="11">
-    <list key="modules" value0="MVC07::org.eclipse.jst.jee.server:MVC07::jst.web::3.1"/>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/Tomcat v9.0 Server at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="Tomcat v9.0 Server at localhost" name="Tomcat v9.0 Server at localhost" runtime-id="Apache Tomcat v9.0" server-type="org.eclipse.jst.server.tomcat.90" server-type-id="org.eclipse.jst.server.tomcat.90" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="2">
+    <list key="modules" value0="MVC07::org.eclipse.jst.jee.server:MVC07::jst.web::3.1" value1="MVC01::org.eclipse.jst.jee.server:MVC01::jst.web::3.1" value2="MVC02::org.eclipse.jst.jee.server:MVC02::jst.web::3.1" value3="MVC03::org.eclipse.jst.jee.server:MVC03::jst.web::3.1" value4="MVC04::org.eclipse.jst.jee.server:MVC04::jst.web::3.1" value5="MVC05::org.eclipse.jst.jee.server:MVC05::jst.web::3.1" value6="MVC06::org.eclipse.jst.jee.server:MVC06::jst.web::3.1"/>
   </server>
 </servers>

@@ -1,2 +1,4 @@
 eclipse.preferences.version=1
+locationorg.eclipse.jst.server.tomcat.runtime.80=/Users/kks/Downloads/apache-tomcat-8.0.53
 locationorg.eclipse.jst.server.tomcat.runtime.85=/Users/kks/Downloads/apache-tomcat-8.5.93
+locationorg.eclipse.jst.server.tomcat.runtime.90=/Users/kks/Downloads/apache-tomcat-9.0.80

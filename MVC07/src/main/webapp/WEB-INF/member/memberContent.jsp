@@ -47,6 +47,45 @@ JSTL의 태그 라이브러리 중 하나로 변수 지정, 제어문, 페이징
 		document.form1.submit();
 	}
 	
+	function update2() {
+		/* 1. 파일이 첨부된 경우 */
+		if($("#file").val() != '') {
+			/* 첨부된 파일데이터를 서버(controller)로 전송하기 위해 'FormData객체' 사용 -> 'fomr태그'와 구분 */
+			var formData = new FormData();
+/* 			FormData객체의 append()메서드 : 파일데이터를 key/value로 묶어준다.
+			$("input[name=file]")[0] : name속성이 file인 input태그들 중 첫번째(0) input태그
+			files[0] : 사용자가 업로드한 파일들 중 첫번째(0) 파일. */				
+			formData.append("file", $("input[name=file]")[0].files[0]);
+			/* 1. ajax(비동기통신)방법으로 파일자체(formData)를 서버로 전송 후, 
+			   2. 업로드 된 파일이름을 반환받아 input(hidden) : filename변수에 저장
+			   3. 모든 텍스트데이터 서버로 전송. */
+			$.ajax({
+		 	/* 1. formData에 묶인 파일데이터를 서버로 전송하기(비동기) : 파일 업로드!  */
+				url : "<c:url value='/fileUpload.do' />",
+				type : "post",
+				data : formData, /* 파일데이터 전송. */
+				/* formData는 단순 text가 아닌, binary데이터이므로 false로 해야한다. */
+				processData : false,
+				contentType : false,
+			/* 2. 클라이언트의 회원정보 + 파일이름 (텍스트데이터) 서버로 전송하기 */	
+				success : function(data) { /* 실제 업로드 된 파일 이름 반환 후, input(hidden) : filename변수에 저장. */
+					alert("수정 되었습니다.");
+					$("#filename").val(data);
+					/* 사용자가 수정한 age, email, phone, filename + num 5개 서버로 전송. */					
+					document.form1.action = "<c:url value='/memberUpdate.do?mode=fileAdd' />";
+					document.form1.submit();
+	 				},
+				error : function() { alert("error"); }
+			});
+			   
+		/* 파일이 첨부되지 않은 경우  */
+		} else {
+			/* id, pass, name, age, email, phone 6개 서버로 전송 */
+			document.form1.action = "<c:url value='/memberUpdate.do?mode=add' />";
+			document.form1.submit();
+		}
+	}
+	
 	function frmreset() {
 		document.form1.reset();
 	}
@@ -57,6 +96,10 @@ JSTL의 태그 라이브러리 중 하나로 변수 지정, 제어문, 페이징
 	
 	function downloadFile(filename) {
 		location.href = "<c:url value='/fileDownload.do'/>?filename=" + filename;
+	}
+	
+	function deleteFile(num, filename) {
+		location.href = "<c:url value='/fileDelete.do'/>?num=" + num + "&filename=" + filename;
 	}
 
 </script>
@@ -93,6 +136,9 @@ JSTL의 태그 라이브러리 중 하나로 변수 지정, 제어문, 페이징
 <div class="panel-body">
     <!-- id중복불가 name중복가능 -->
  <form id="form1" name="form1" class="form-horizontal" method='post'> 
+ 
+ 	<input type="hidden" id="filename" name="filename" >
+ 	
  	<!-- 전송 시, 수정 없이 num 함께 전송됨. -->
     <input type='hidden' name='num' value='${vo.num}'/> 	
     
@@ -100,7 +146,7 @@ JSTL의 태그 라이브러리 중 하나로 변수 지정, 제어문, 페이징
     
     <!-- 로그인 + 자신의 것-->
 	 <c:if test="${!empty sessionScope.userId && sessionScope.userId==vo.id}">
-	   <!-- 파일첨부 한 경우 -->
+	   <!-- 파일첨부 한 경우 . 따라서, 로그인한 사람이 자신의 사진만 볼 수 있다.-->
 	   <c:if test="${vo.filename!=null && vo.filename!=''}">
 		  <div class="form-group">
 	        	<label class="control-label col-sm-2">사진</label>
@@ -154,14 +200,27 @@ JSTL의 태그 라이브러리 중 하나로 변수 지정, 제어문, 페이징
       
       <div class="form-group">
         <label class="control-label col-sm-2">첨부파일 :</label>
-        <div class="col-sm-10">
-          <input type="file" id="file" name="file" style="width:30%"/>
+	        <div class="col-sm-10">
+	        <!-- 로그인을 하고, 나의 것만 첨부파일 수정할 수 있다. -->
+	        <c:if test="${sessionScope.userId!=null && sessionScope.userId == vo.id }">
+	          <input type="file" id="file" name="file" style="width:30%"/>
+	        </c:if>
+	        <!-- 로그인을 하고, 나의 것이 아니면 첨부파일 수정할 수 없다. -->
+	        <c:if test="${sessionScope.userId!=null && sessionScope.userId != vo.id }">
+	          <input type="file" id="file" name="file" style="width:30%" disabled="disabled"/>
+	        </c:if>
+	        <!-- 로그인을 하지 않으면 첨부파일 수정할 수 없다. -->
+	        <c:if test="${sessionScope.userId==null}">
+	          <input type="file" id="file" name="file" style="width:30%" disabled="disabled"/>
+	        </c:if>
+        
           <!-- 클릭하면 서버에 업로드 된 파일을 다운로드한다. -->
           <c:if test="${vo.filename != null && vo.filename != ''}" >
           	<a href="javascript:downloadFile('${vo.filename}')"><c:out value="${vo.filename}" /></a>
           </c:if>
+          <!-- 로그인 후 내 파일만 삭제할 수 있다. -->
           <c:if test="${sessionScope.userId != null && sessionScope.userId == vo.id && vo.filename != null && vo.filename != ''}" >
-            <span class="glyphicon glyphicon-remove"></span>
+            <a href="javascript:deleteFile('${vo.num}', '${vo.filename}')"><span class="glyphicon glyphicon-remove"></span></a>
           </c:if>
           	
         </div>
@@ -178,14 +237,13 @@ JSTL의 태그 라이브러리 중 하나로 변수 지정, 제어문, 페이징
       <!--로그인을 해야 수정하기 버튼을 클릭할 수 있는데, 자신의 것만 클릭가능하다.  -->
       <c:if test="${!empty sessionScope.userId}">
         <c:if test="${sessionScope.userId==vo.id}">
-		   <input type='button' class='btn btn-primary' value='수정하기' onclick="update()"/> 
+		   <input type='button' class='btn btn-primary' value='수정하기' onclick="update2()"/> 
         </c:if>
         <!-- 다른 사람의 수정하기버튼은 클릭할 수 없다. -->
         <c:if test="${sessionScope.userId!=vo.id}">
 		   <input type='button' class='btn btn-primary' value='수정하기' disabled="disabled"/> 
         </c:if>
 	  </c:if>
-	  
 	  <!--로그인을 하지 않았으면 수정하기 버튼은 아예 클릭할 수 없다.  -->
 	  <c:if test="${empty sessionScope.userId}">
 		 <input type='button' class='btn btn-primary' value='수정하기' disabled="disabled"/> 
@@ -195,7 +253,6 @@ JSTL의 태그 라이브러리 중 하나로 변수 지정, 제어문, 페이징
 		<%-- <input type='button' class='btn btn-success' value='리스트로' onclick="location.href='${ctx}/memberList.do'" /> --%>
 		<input type='button' class='btn btn-success' value='리스트로' onclick="memlist()" />
 	</div>
-	
  </div>
 </div>
 

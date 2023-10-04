@@ -27,6 +27,8 @@ public class MemberListController implements Controller {
 		//2. request객체에 set 객체바인딩 
 		request.setAttribute("list", list);
 		
+		response.setCharacterEncoding("utf-8");
+		
 		//3. 다음 페이지 안내.(포워딩)
 //		return "/WEB-INF/member/memberList.jsp"; ViewResolver 활용할 것(논리적 이름)
 		return "memberList";

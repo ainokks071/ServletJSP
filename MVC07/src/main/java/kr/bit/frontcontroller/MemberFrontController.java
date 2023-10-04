@@ -86,8 +86,10 @@ public class MemberFrontController extends HttpServlet {
 				response.sendRedirect(nextPage.split(":")[1]);
 //			2) redirect: 문자열이 없으면 "forward"	
 			} else {
+				
 //				RequestDispatcher rd = request.getRequestDispatcher(nextPage);
-//																		~~.jsp 페이지로 요청의뢰.(포워딩)
+//				~~.jsp 페이지로 요청의뢰.(포워딩)
+				response.setCharacterEncoding("utf-8");														
 				RequestDispatcher rd = request.getRequestDispatcher(ViewResolver.makeView(nextPage));
 				rd.forward(request, response);
 			}

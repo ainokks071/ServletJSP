@@ -43,6 +43,9 @@
   	delete from member where num=#{num}
   </delete>
   
+  <update id="memberFileDelete" parameterType="Integer">
+  	update member set filename = '' where num = #{num}
+  </update>
  													<!--select의 결과 -> vo로 묶는 작업을 알아서 해준다.  -->
   <select id="memberContent" parameterType="Integer" resultType="memberVO">
     select * from member where num=#{num}
@@ -50,6 +53,10 @@
   
   <update id="memberUpdate" parameterType="memberVO">
   	update member set age=#{age}, phone=#{phone}, email=#{email} where num=#{num}
+  </update>
+  
+  <update id="memberFileUpdate" parameterType="memberVO">
+  	update member set age=#{age}, phone=#{phone}, email=#{email}, filename=#{filename} where num=#{num}
   </update>
   
  													<!--select의 결과 -> String -->
@@ -60,5 +67,6 @@
   <select id="memberDbcheck" parameterType="String" resultType="String">
     select id from member where id=#{id}
   </select>
+  
   
 </mapper>

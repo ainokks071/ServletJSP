@@ -26,7 +26,7 @@ public class FileDownloadController implements Controller {
 //		System.out.println(downloadFile.getPath()); : 파일 경로
 //		System.out.println(downloadFile.getName()); : 파일 이름 
 		
-		fileName = URLEncoder.encode(fileName, "UTF-8");
+		fileName = URLEncoder.encode(fileName, "UTF-8"); 
 		fileName = fileName.replace("+", " ");
 		
 		response.setContentLength((int)downloadFile.length());

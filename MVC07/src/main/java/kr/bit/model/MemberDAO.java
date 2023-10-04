@@ -54,9 +54,9 @@ public class MemberDAO {
 		
 		return list;
 	}
-	
 	public int memberInsert(MemberVO vo) {
 		SqlSession session = sqlSessionFactory.openSession();
+		
 //		mapper의 id, 파라메터 vo
 		int cnt = session.insert("memberInsert", vo);
 //		insert, delete, update는 commit 필요.
@@ -131,6 +131,23 @@ public class MemberDAO {
 		session.close();
 
 		return isDouble;
+	}
+	
+	public int memberFileDelete(int num) {
+		SqlSession session = sqlSessionFactory.openSession();
+		int cnt = session.update("memberFileDelete", num);
+		session.commit();
+		session.close();
+
+		return cnt;
+	}
+	
+	public int memberFileUpdate(MemberVO vo) {
+		SqlSession session = sqlSessionFactory.openSession();
+		int cnt = session.update("memberFileUpdate", vo);
+		session.commit();
+		session.close();
+		return cnt;
 	}
 	
 	

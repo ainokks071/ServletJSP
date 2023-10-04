@@ -66,7 +66,6 @@ public class FileUploadController implements Controller {
 //					파일이 잘 넘어왔냐..
 					if(fileItem.getSize()>0) {
 						fileName = fileItem.getName();
-
 //						getName() : 원래는 파일의 절대 이름(경로포함) 추출인데, 바로 되네? 
 //						int index = fileItem.getName().lastIndexOf("/");
 //						if(index==-1) {
@@ -74,7 +73,7 @@ public class FileUploadController implements Controller {
 //						}
 //						순수 파일 이름 추출하기.
 //						fileName = fileItem.getName().substring(index+1);
-//						System.out.println(fileName);
+						System.out.println(fileName);
 //						그 경로로 실제로 파일 객체 생성
 						File uploadFile = new File(uploadPath + "/" + fileName);
 						
@@ -97,7 +96,7 @@ public class FileUploadController implements Controller {
 			e.printStackTrace();
 		}
 		
-//		ajax로 fileName을 넘겨준다.
+//		ajax의 콜백함수로 fileName을 넘겨준다.
 		response.setContentType("text/html;charset=utf-8");
 		response.getWriter().print(fileName);
 		return null;
